@@ -67,7 +67,7 @@ if data:
         elif event_type == "DeleteEvent":
             ref_type = payload.get("ref_type")
             ref_name = payload.get("ref")
-            print(f"- Deleted {ref_type} [{ref_name}] from {repo_name}")
+            print(f"- Deleted {ref_type} [{ref_name}] from [{repo_name}]")
 
         elif event_type == "ForkEvent":
             print(f"- Forked [{repo_name}]")
@@ -80,12 +80,12 @@ if data:
 
         elif event_type == "IssuesEvent":
             action = payload.get("action", "").capitalize()
-            print(f"- {action} issue in {repo_name}")
+            print(f"- {action} issue in [{repo_name}]")
 
         elif event_type == "PullRequestEvent":
             action = payload.get("action")
-            pr_number = payload.get("number", "")
             pr_data = payload.get("pull_request", {})
+            pr_number = pr_data.get("number", "")
             pr_title = pr_data.get("title", "a pull request")
 
             if action == "opened":
@@ -102,12 +102,7 @@ if data:
                 print(f"- {action.capitalize()} pull request #{pr_number} in [{repo_name}]")
 
         elif event_type == "PushEvent":
-            commits = payload.get("commits", [])
-            count = len(commits)
-            suffix = "commit" if count == 1 else "commits"
-            
-            if commits:
-                print(f"- Pushed {count} {suffix} to [{repo_name}]")
+            print(f"- Pushed to [{repo_name}]")
 
         elif event_type == "WatchEvent":
             print(f"- Starred repo [{repo_name}]")
